@@ -1,0 +1,29 @@
+Test project /home/zain/PathPlanningProject/Build/Debug
+      Start  1: Test1
+ 1/12 Test  #1: Test1 ............................   Passed    0.14 sec
+      Start  2: Test2
+ 2/12 Test  #2: Test2 ............................   Passed    0.13 sec
+      Start  3: Test3
+ 3/12 Test  #3: Test3 ............................   Passed    0.16 sec
+      Start  4: Test4
+ 4/12 Test  #4: Test4 ............................   Passed    0.16 sec
+      Start  5: Test5
+ 5/12 Test  #5: Test5 ............................   Passed    0.17 sec
+      Start  6: Test6
+ 6/12 Test  #6: Test6 ............................   Passed    0.13 sec
+      Start  7: Test7
+ 7/12 Test  #7: Test7 ............................   Passed    0.16 sec
+      Start  8: Test8
+ 8/12 Test  #8: Test8 ............................   Passed    0.17 sec
+      Start  9: Test9
+ 9/12 Test  #9: Test9 ............................   Passed    0.17 sec
+      Start 10: Test10
+10/12 Test #10: Test10 ...........................   Passed    0.13 sec
+      Start 11: Test11
+11/12 Test #11: Test11 ...........................   Passed    0.13 sec
+      Start 12: Test12
+12/12 Test #12: Test12 ...........................   Passed    0.12 sec
+
+100% tests passed, 0 tests failed out of 12
+
+Total Test time (real) =   1.78 sec

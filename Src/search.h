@@ -8,6 +8,7 @@
 #include <math.h>
 #include <limits>
 #include <chrono>
+#include <queue>
 
 class Search
 {
@@ -15,6 +16,8 @@ class Search
         Search();
         ~Search(void);
         SearchResult startSearch(ILogger *Logger, const Map &Map, const EnvironmentOptions &options);
+        int diri[8]={1,-1,0,0,1,1,-1,-1};
+        int dirj[8]={0,0,1,-1,1,-1,1,-1};
 
     protected:
         //CODE HERE
@@ -32,10 +35,14 @@ class Search
         //Start with very simple (and ineffective) structures like list or vector and make it work first
         //and only then begin enhancement!
 
-
+        double EstimateCost(int, int, int, int, const EnvironmentOptions &);
+        bool valid_move(int, int, int, int, const Map &, const EnvironmentOptions &);
+        Node * CLOSED;
+        bool ** vis;
+        int h, w;
+        std::priority_queue<Node>       q;
         SearchResult                    sresult; //This will store the search result
         std::list<Node>                 lppath, hppath; //
-
         //CODE HERE to define other members of the class
 };
 #endif

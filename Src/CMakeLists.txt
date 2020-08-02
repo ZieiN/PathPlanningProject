@@ -15,6 +15,7 @@ set(SOURCES         config.cpp
                     environmentoptions.cpp
                     map.cpp
                     mission.cpp
+                    node.cpp
                     search.cpp
                     tinyxml2.cpp
                     xmllogger.cpp)
