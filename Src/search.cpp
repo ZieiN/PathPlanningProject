@@ -110,6 +110,21 @@ SearchResult Search::startSearch(ILogger *Logger, const Map &map, const Environm
 				}
 			}
 		}
+		for(auto it1=lppath.begin(); it1!=lppath.end(); ++it1){
+			auto it2=it1;
+			++it2;
+			if(it2==lppath.end()){
+				break;
+			}
+			auto it3=it2;
+			++it3;
+			if(it3==lppath.end()){
+				break;
+			}
+			if(it3->i-it2->i == it2->i-it1->i && it3->j-it2->j == it2->j-it1->j){
+				lppath.erase(it2);
+			}
+		}
 		sresult.time=1.0*clock()/CLOCKS_PER_SEC-start_time;
     sresult.hppath = &hppath; //Here is a constant pointer
     sresult.lppath = &lppath;
