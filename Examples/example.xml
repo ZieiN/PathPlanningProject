@@ -37,11 +37,11 @@
         </grid>
     </map>
     <algorithm>
-        <searchtype>astar</searchtype>
+        <searchtype>bfs</searchtype>
         <metrictype>diagonal</metrictype>
         <breakingties>g-max</breakingties>
         <hweight>1</hweight>
-        <allowdiagonal>true</allowdiagonal>
+        <allowdiagonal>false</allowdiagonal>
         <cutcorners>true</cutcorners>
         <allowsqueeze>true</allowsqueeze>
     </algorithm>
