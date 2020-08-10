@@ -16,6 +16,9 @@ class Search
         Search();
         ~Search(void);
         SearchResult startSearch(ILogger *Logger, const Map &Map, const EnvironmentOptions &options);
+        void go_BFS(ILogger *Logger, const Map &map, const EnvironmentOptions &options);
+        void go_DIJKSTRA(ILogger *Logger, const Map &map, const EnvironmentOptions &options);
+        void go_ASTAR(ILogger *Logger, const Map &map, const EnvironmentOptions &options);
         int diri[8]={1,-1,0,0,1,1,-1,-1};
         int dirj[8]={0,0,1,-1,1,-1,1,-1};
 
@@ -41,6 +44,7 @@ class Search
         bool ** vis;
         int h, w;
         std::priority_queue<Node>       q;
+        std::queue<Node>                q1;
         SearchResult                    sresult; //This will store the search result
         std::list<Node>                 lppath, hppath; //
         //CODE HERE to define other members of the class

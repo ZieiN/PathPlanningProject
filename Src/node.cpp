@@ -1,11 +1,6 @@
 #include "node.h"
 #include <iostream>
 
-bool operator < (Node a, Node b){
-	if(a.F==b.F)
-		return a.H > b.H;
-	return a.F > b.F;
-}
 Node::Node(){
 	i=j=F=g=H=0;
 	parent=NULL;
