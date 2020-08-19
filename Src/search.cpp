@@ -114,7 +114,7 @@ void Search::go_BFS(ILogger *Logger, const Map &map, const EnvironmentOptions &o
 		for(int i=0; i<num_moves; ++i){
 			int ii=front.i+diri[i];
 			int jj=front.j+dirj[i];
-			if(valid_move(front.i, front.j, ii, jj, map, options)){
+			if(valid_move(front.i, front.j, ii, jj, map, options) && !vis[ii][jj]){
 				sresult.nodescreated++;
 				double cost=hypot(ii-front.i, jj-front.j);
 				double estimated_cost=EstimateCost(ii, jj, ndi, ndj, options);
@@ -176,7 +176,7 @@ void Search::go_DIJKSTRA(ILogger *Logger, const Map &map, const EnvironmentOptio
 		for(int i=0; i<num_moves; ++i){
 			int ii=top.i+diri[i];
 			int jj=top.j+dirj[i];
-			if(valid_move(top.i, top.j, ii, jj, map, options)){
+			if(valid_move(top.i, top.j, ii, jj, map, options) && !vis[ii][jj]){
 				sresult.nodescreated++;
 				double cost=hypot(ii-top.i, jj-top.j);
 				double estimated_cost=EstimateCost(ii, jj, ndi, ndj, options);
@@ -238,7 +238,7 @@ void Search::go_ASTAR(ILogger *Logger, const Map &map, const EnvironmentOptions 
 		for(int i=0; i<num_moves; ++i){
 			int ii=top.i+diri[i];
 			int jj=top.j+dirj[i];
-			if(valid_move(top.i, top.j, ii, jj, map, options)){
+			if(valid_move(top.i, top.j, ii, jj, map, options) && !vis[ii][jj]){
 				sresult.nodescreated++;
 				double cost=hypot(ii-top.i, jj-top.j);
 				double estimated_cost=EstimateCost(ii, jj, ndi, ndj, options);

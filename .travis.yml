@@ -13,6 +13,8 @@ env:
     - TARGET_CPU=amd64 COMPILER=g++-4.9 BUILD_CONFIGURATION=Release
       
 script:
+  - mkdir Build
+  - mkdir Debug
   - cd Build
   - cd $BUILD_CONFIGURATION
   - cmake -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU ../../
