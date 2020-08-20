@@ -2,10 +2,9 @@
 #include <iostream>
 
 Node::Node(){
-	i=j=F=g=H=0;
-	parent=NULL;
+	i=j=F=g=H=parent=0;
 }
-Node::Node(int i, int j, double F, double g, double H, Node *parent){
+Node::Node(int i, int j, double F, double g, double H, int parent){
 	this->i=i;
 	this->j=j;
 	this->F=F;

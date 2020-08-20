@@ -10,7 +10,6 @@ Search::Search()
 //set defaults here
 }
 Search::~Search() {
-	delete CLOSED;
 	for(int i=0; i<h+2; ++i){
 		delete[] vis[i];
 	}
@@ -79,7 +78,6 @@ void Search::go_BFS(ILogger *Logger, const Map &map, const EnvironmentOptions &o
   else{
   	num_moves=4;
   }
-  CLOSED = new Node [h*w+10];
   int cnt=-1;
   vis = new bool *[h+2];
   for(int i=0; i<h+2; ++i){
@@ -98,7 +96,8 @@ void Search::go_BFS(ILogger *Logger, const Map &map, const EnvironmentOptions &o
 		++sresult.numberofsteps;
 		if(vis[front.i][front.j])continue;
 		vis[front.i][front.j]=1;
-		CLOSED[++cnt]=front;
+		CLOSED.push_back(front);
+		++cnt;
 		if(front.i==ndi && front.j==ndj){
 			sresult.pathfound=true;
 			sresult.pathlength=front.g;
@@ -107,7 +106,7 @@ void Search::go_BFS(ILogger *Logger, const Map &map, const EnvironmentOptions &o
 				lppath.push_front(front);
 				if(front.parent==NULL)
 					break;
-				front=*front.parent;
+				front=CLOSED[front.parent];
 			}
 			break;
 		}
@@ -118,7 +117,7 @@ void Search::go_BFS(ILogger *Logger, const Map &map, const EnvironmentOptions &o
 				sresult.nodescreated++;
 				double cost=hypot(ii-front.i, jj-front.j);
 				double estimated_cost=EstimateCost(ii, jj, ndi, ndj, options);
-				q1.push(Node(ii, jj, front.g+cost+estimated_cost*options.hweight, front.g+cost, estimated_cost, &CLOSED[cnt]));
+				q1.push(Node(ii, jj, front.g+cost+estimated_cost*options.hweight, front.g+cost, estimated_cost, cnt));
 			}
 		}
 	}
@@ -141,7 +140,6 @@ void Search::go_DIJKSTRA(ILogger *Logger, const Map &map, const EnvironmentOptio
   else{
   	num_moves=4;
   }
-  CLOSED = new Node [h*w+10];
   int cnt=-1;
   vis = new bool *[h+2];
   for(int i=0; i<h+2; ++i){
@@ -157,10 +155,10 @@ void Search::go_DIJKSTRA(ILogger *Logger, const Map &map, const EnvironmentOptio
 	while(!q.empty()){
 		top=q.top();
 		q.pop();
-		++sresult.numberofsteps;
 		if(vis[top.i][top.j])continue;
 		vis[top.i][top.j]=1;
-		CLOSED[++cnt]=top;
+		CLOSED.push_back(top);
+		++cnt;
 		if(top.i==ndi && top.j==ndj){
 			sresult.pathfound=true;
 			sresult.pathlength=top.g;
@@ -169,7 +167,7 @@ void Search::go_DIJKSTRA(ILogger *Logger, const Map &map, const EnvironmentOptio
 				lppath.push_front(top);
 				if(top.parent==NULL)
 					break;
-				top=*top.parent;
+				top=CLOSED[top.parent];
 			}
 			break;
 		}
@@ -177,13 +175,14 @@ void Search::go_DIJKSTRA(ILogger *Logger, const Map &map, const EnvironmentOptio
 			int ii=top.i+diri[i];
 			int jj=top.j+dirj[i];
 			if(valid_move(top.i, top.j, ii, jj, map, options) && !vis[ii][jj]){
-				sresult.nodescreated++;
 				double cost=hypot(ii-top.i, jj-top.j);
 				double estimated_cost=EstimateCost(ii, jj, ndi, ndj, options);
-				q.push(Node(ii, jj, top.g+cost+estimated_cost*options.hweight, top.g+cost, estimated_cost, &CLOSED[cnt]));
+				q.push(Node(ii, jj, top.g+cost+estimated_cost*options.hweight, top.g+cost, estimated_cost, cnt));
 			}
 		}
 	}
+	sresult.nodescreated=q.size()+CLOSED.size();
+	sresult.numberofsteps=CLOSED.size();
 	sresult.time=1.0*clock()/CLOCKS_PER_SEC-start_time;
 }
 void Search::go_ASTAR(ILogger *Logger, const Map &map, const EnvironmentOptions &options)
@@ -203,7 +202,6 @@ void Search::go_ASTAR(ILogger *Logger, const Map &map, const EnvironmentOptions 
   else{
   	num_moves=4;
   }
-  CLOSED = new Node [h*w+10];
   int cnt=-1;
   vis = new bool *[h+2];
   for(int i=0; i<h+2; ++i){
@@ -219,10 +217,10 @@ void Search::go_ASTAR(ILogger *Logger, const Map &map, const EnvironmentOptions 
 	while(!q.empty()){
 		top=q.top();
 		q.pop();
-		++sresult.numberofsteps;
 		if(vis[top.i][top.j])continue;
 		vis[top.i][top.j]=1;
-		CLOSED[++cnt]=top;
+		CLOSED.push_back(top);
+		++cnt;
 		if(top.i==ndi && top.j==ndj){
 			sresult.pathfound=true;
 			sresult.pathlength=top.g;
@@ -231,7 +229,7 @@ void Search::go_ASTAR(ILogger *Logger, const Map &map, const EnvironmentOptions 
 				lppath.push_front(top);
 				if(top.parent==NULL)
 					break;
-				top=*top.parent;
+				top=CLOSED[top.parent];
 			}
 			break;
 		}
@@ -239,13 +237,14 @@ void Search::go_ASTAR(ILogger *Logger, const Map &map, const EnvironmentOptions 
 			int ii=top.i+diri[i];
 			int jj=top.j+dirj[i];
 			if(valid_move(top.i, top.j, ii, jj, map, options) && !vis[ii][jj]){
-				sresult.nodescreated++;
 				double cost=hypot(ii-top.i, jj-top.j);
 				double estimated_cost=EstimateCost(ii, jj, ndi, ndj, options);
-				q.push(Node(ii, jj, top.g+cost+estimated_cost*options.hweight, top.g+cost, estimated_cost, &CLOSED[cnt]));
+				q.push(Node(ii, jj, top.g+cost+estimated_cost*options.hweight, top.g+cost, estimated_cost, cnt));
 			}
 		}
 	}
+	sresult.nodescreated=q.size()+CLOSED.size();
+	sresult.numberofsteps=CLOSED.size();
 	sresult.time=1.0*clock()/CLOCKS_PER_SEC-start_time;
 }
 

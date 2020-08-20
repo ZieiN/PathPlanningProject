@@ -40,7 +40,7 @@ class Search
 
         double EstimateCost(int, int, int, int, const EnvironmentOptions &);
         bool valid_move(int, int, int, int, const Map &, const EnvironmentOptions &);
-        Node * CLOSED;
+        std::vector<Node> CLOSED;
         bool ** vis;
         int h, w;
         std::priority_queue<Node>       q;
